@@ -1,0 +1,22 @@
+#
+# Provider Configuration
+#
+
+provider "aws" {
+  access_key = "AKIAY4NUIMCSTMO4KCIB"
+  secret_key = "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"
+  region  = "us-west-2"
+  version = ">= 3.29.0"
+}
+
+# Using these data sources allows the configuration to be
+# generic for any region.
+data "aws_region" "current" {}
+
+data "aws_availability_zones" "available" {}
+
+# Not required: currently used in conjuction with using
+# icanhazip.com to determine local workstation external IP
+# to open EC2 Security Group access to the Kubernetes cluster.
+# See workstation-external-ip.tf for additional information.
+provider "http" {}
