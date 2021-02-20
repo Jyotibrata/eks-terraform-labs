@@ -3,8 +3,8 @@
 #
 
 provider "aws" {
-  access_key = "AKIAY4NUIMCSTMO4KCIB"
-  secret_key = "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"
+  access_key = "**************"
+  secret_key = "**************"
   region  = "us-west-2"
   version = ">= 3.29.0"
 }
