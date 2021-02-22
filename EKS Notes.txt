@@ -1,0 +1,61 @@
+Git Repo 
+
+https://github.com/Jyotibrata/eks-terraform-labs.git
+
+Architecture
+
+1. 1 VPC
+2. 2 Public Subnets connected to the above VPC.
+3. Route Table (Route Table will have an association, which connects to the above public subnets)
+4. 1 Internet Gateway which needs to be associated to the VPC above
+5. EKS Cluster
+   1 IAM Role (2 policies)
+6. 2 umnanaged node group or worker node
+   1 IAM Role (3 policies each)
+7. 1 Security Group with rule
+
+19 resources in total to be provisioned by Terraform.
+
+There is a simple sprinboot web app which has 2 API's (/hello and another default /) built as an maven application and packaged to docker hub.  
+
+docker login -u jyotibrata
+
+docker build -t image_eks_app:v_0.1 .
+
+docker tag image_eks_app:latest jyotibrata/repo_jd
+
+docker push jyotibrata/repo_jd
+
+Install Terraform 
+
+Install AWS CLI Authneticator (https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html)
+
+Repo Used - https://github.com/hashicorp/terraform-provider-aws
+
+Visual Studio - C:\Tech\terraform-provider-aws-2.51.0\examples\eks-getting-started
+CMD - code .
+
+Backend Configuration for S3 statefile 
+terraform init -backend-config="access_key=**********" -backend-config="secret_key=****************"   
+terraform plan
+terraform apply (yes)
+
+Manual
+terraform output kubeconfig
+terraform output kubeconfig > ~/.kube/config
+
+Automatic
+aws --version
+aws eks --region us-west-2 update-kubeconfig --name eks_craft
+
+kubectl cluster-info
+kubectl get nodes
+
+Jenkins 
+docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home jenkins/jenkins:lts
+
+Jenkins hosted on EC2 (t2.micro) with maven, git, docker, kubectl cli's installed.
+
+git add .
+git commit -m "pushed java source"
+git push
